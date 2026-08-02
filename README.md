@@ -39,12 +39,12 @@ The active simulation configuration uses:
 
 The small-cell energy model uses the following total-power levels relative to ACTIVE operation:
 
-| State | Total power level | Transmission behavior |
+| State | Power Consumption | (De)activation Duration |
 |---|---:|---|
-| ACTIVE | 100% | Transmission enabled |
-| SM1 | 69% | Transmission disabled |
-| SM2 | 50% | Transmission disabled |
-| SM3 | 29% | Transmission disabled |
+| ACTIVE | 100% | 35.5 µs |
+| SM1 | 69% | 0.5 ms |
+| SM2 | 50% | 5 ms |
+| SM3 | 29% | 0.5 s |
 
 A sleeping small cell requires a state-dependent activation delay before returning to ACTIVE operation.
 
