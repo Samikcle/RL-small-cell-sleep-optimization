@@ -40,7 +40,7 @@ The active simulation configuration uses:
 The small-cell energy model uses the following total-power levels relative to ACTIVE operation:
 
 | State | Power Consumption | (De)activation Duration |
-|---|---:|---|
+|---|---:|---:|
 | ACTIVE | 100% | 35.5 µs |
 | SM1 | 69% | 0.5 ms |
 | SM2 | 50% | 5 ms |
