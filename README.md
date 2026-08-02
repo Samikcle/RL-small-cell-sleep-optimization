@@ -12,15 +12,15 @@ The algorithms aim to reduce small-cell energy consumption while maintaining acc
 
 | File | Purpose |
 |---|---|
-| `scratch(1)_clean_comments.cc` | Main ns-3 LTE/OpenGym simulation environment. It creates the macro base station, five small-cell base stations, 30 user devices, traffic, mobility, handover behavior, observations, rewards, and action handling. |
-| `smallCellEnergyModel(1)_clean_comments.h` | Custom ns-3 energy model for the small-cell base stations. It defines the ACTIVE, SM1, SM2, and SM3 states, their power consumption, activation delays, transition behavior, and energy accounting. |
-| `fast_ddqn_multiagent_c_5(4)_clean_comments.py` | Multi-agent DDQN-PER training script. It trains one DDQN agent for each of the five small cells and saves checkpoints, training metrics, baseline results, and graphs. |
-| `ppo_learning_4(5)_clean_comments.py` | Multi-agent PPO training script. It uses actor-critic networks, generalized advantage estimation, clipped policy updates, and per-agent checkpoints. |
-| `tabular_q_learning_c_10(2)_clean_comments.py` | Multi-agent tabular Q-learning training script. It discretizes each small cell's observation and stores learned action values in a Q-table. |
-| `test_all_models_checkpoint(1)_clean_comments.py` | Evaluates DDQN, PPO, Q-learning, and the always-ACTIVE baseline using common test seeds. It supports checkpointing and resuming interrupted evaluations. |
-| `plot_training_percentages_and_sinr_thresholds_separate_original_style_clean_comments.py` | Post-processes each algorithm's training outputs separately. It adds SINR quality thresholds and converts energy and energy efficiency to percentages relative to that algorithm's baseline. |
-| `plot_sinr_thresholds_percentages_magenta_threshold(1)_clean_comments.py` | Post-processes the combined testing results. It adds SINR quality thresholds and produces energy and efficiency comparisons relative to the baseline. |
-| `convert_rl_npy_to_csv(1)_clean_comments.py` | Converts saved NumPy result files into individual CSV files and a combined episode-level comparison table. |
+| `scratch.cc` | Main ns-3 LTE/OpenGym simulation environment. It creates the macro base station, five small-cell base stations, 30 user devices, traffic, mobility, handover behavior, observations, rewards, and action handling. |
+| `smallCellEnergyModel.h` | Custom ns-3 energy model for the small-cell base stations. It defines the ACTIVE, SM1, SM2, and SM3 states, their power consumption, activation delays, transition behavior, and energy accounting. |
+| `fast_ddqn_multiagent_c_5.py` | Multi-agent DDQN-PER training script. It trains one DDQN agent for each of the five small cells and saves checkpoints, training metrics, baseline results, and graphs. |
+| `ppo_learning_4.py` | Multi-agent PPO training script. It uses actor-critic networks, generalized advantage estimation, clipped policy updates, and per-agent checkpoints. |
+| `tabular_q_learning_c_10.py` | Multi-agent tabular Q-learning training script. It discretizes each small cell's observation and stores learned action values in a Q-table. |
+| `test_all_models_checkpoint.py` | Evaluates DDQN, PPO, Q-learning, and the always-ACTIVE baseline using common test seeds. It supports checkpointing and resuming interrupted evaluations. |
+| `plot_training_percentages_and_sinr_thresholds.py` | Post-processes each algorithm's training outputs separately. It adds SINR quality thresholds and converts energy and energy efficiency to percentages relative to that algorithm's baseline. |
+| `plot_sinr_thresholds_percentages.py` | Post-processes the combined testing results. It adds SINR quality thresholds and produces energy and efficiency comparisons relative to the baseline. |
+| `convert_rl_npy_to_csv.py` | Converts saved NumPy result files into individual CSV files and a combined episode-level comparison table. |
 
 ## Simulation Structure
 
@@ -115,28 +115,35 @@ The scripts also use Python standard-library modules such as `argparse`, `csv`, 
 
 The exact ns-3 and ns3-gym installation commands depend on the versions and directory structure used by the local simulation environment.
 
-## Preparing the Files
+## Preparing the Environment
 
-The files in the cleaned package contain `_clean_comments` in their names. Before running the project, either update all internal references or rename the operational files. The simplest arrangement is:
+1. Install ns-3 (version 3.40 is preferred)
+2. Install ns3-gym
+3. Build ns-3
+4. Setup Python virtual environment
+5. Install required python packages
+6. Place all files in this repository into ns-3/scratch/
+
+## Expected Project Layout
 
 ```text
-scratch.cc
-smallCellEnergyModel.h
-fast_ddqn_multiagent_c_5.py
-ppo_learning_4.py
-tabular_q_learning_c_10.py
-test_all_models_checkpoint.py
-plot_training_percentages_and_sinr_thresholds_separate_original_style.py
-plot_sinr_thresholds_percentages_magenta_threshold.py
-convert_rl_npy_to_csv.py
+ns-3/
+└── scratch/
+    ├── scratch.cc
+    ├── smallCellEnergyModel.h
+    ├── fast_ddqn_multiagent_c_5.py
+    ├── ppo_learning_4.py
+    ├── tabular_q_learning_c_10.py
+    ├── test_all_models_checkpoint.py
+    ├── plot_training_percentages_and_sinr_thresholds.py
+    ├── plot_sinr_thresholds_percentages.py
+    ├── convert_rl_npy_to_csv.py
+    ├── ddqn_per_results_c_5_500_2/
+    ├── ppo_results_4_500_5/
+    ├── qlearning_results_c_10_500_2/
+    ├── all_model_test_results/
+    └── csv_results/
 ```
-
-This renaming is important because:
-
-- `scratch.cc` includes `smallCellEnergyModel.h`.
-- The testing script dynamically imports `fast_ddqn_multiagent_c_5.py`, `ppo_learning_4.py`, and `tabular_q_learning_c_10.py`.
-
-Place `scratch.cc` in the appropriate ns-3 scratch directory and place `smallCellEnergyModel.h` where the compiler can resolve the include statement. Keep the Python scripts in a working directory that can access the ns-3/ns3-gym environment.
 
 ## Running the Simulation Environment
 
@@ -394,30 +401,6 @@ The `--include-model-artifacts` option also converts files such as Q-tables and 
 7. Generate the separate training graphs.
 8. Generate the combined testing graphs.
 9. Convert NumPy results to CSV for statistical analysis or reporting.
-```
-
-## Typical Project Layout
-
-```text
-project/
-├── fast_ddqn_multiagent_c_5.py
-├── ppo_learning_4.py
-├── tabular_q_learning_c_10.py
-├── test_all_models_checkpoint.py
-├── plot_training_percentages_and_sinr_thresholds_separate_original_style.py
-├── plot_sinr_thresholds_percentages_magenta_threshold.py
-├── convert_rl_npy_to_csv.py
-├── ddqn_per_results_c_5_500_2/
-├── ppo_results_4_500_5/
-├── qlearning_results_c_10_500_2/
-├── all_model_test_results/
-└── csv_results/
-
-ns-3/
-├── scratch/
-│   └── scratch.cc
-└── ... location visible to the compiler .../
-    └── smallCellEnergyModel.h
 ```
 
 ## Reproducibility Notes
