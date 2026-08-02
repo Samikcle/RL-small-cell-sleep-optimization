@@ -294,7 +294,7 @@ By default, an interrupted evaluation resumes when the saved configuration and t
 To create separate percentage-based training graphs for each algorithm, run:
 
 ```bash
-python3 plot_training_percentages_and_sinr_thresholds_separate_original_style.py
+python3 plot_training_percentages_and_sinr_thresholds.py
 ```
 
 The script reads the three configured training output folders and creates this subdirectory inside each one:
@@ -313,7 +313,7 @@ Outputs include:
 A different output subdirectory can be selected with:
 
 ```bash
-python3 plot_training_percentages_and_sinr_thresholds_separate_original_style.py \
+python3 plot_training_percentages_and_sinr_thresholds.py \
   --output-subdir my_training_plots
 ```
 
@@ -322,7 +322,7 @@ python3 plot_training_percentages_and_sinr_thresholds_separate_original_style.py
 After running the common evaluation, use:
 
 ```bash
-python3 plot_sinr_thresholds_percentages_magenta_threshold.py
+python3 plot_sinr_thresholds_percentages.py
 ```
 
 Default input directory:
@@ -350,7 +350,7 @@ The script generates:
 Custom paths can be provided using:
 
 ```bash
-python3 plot_sinr_thresholds_percentages_magenta_threshold.py \
+python3 plot_sinr_thresholds_percentages.py \
   --input-dir all_model_test_results \
   --output-subdir custom_test_plots
 ```
